@@ -3,7 +3,9 @@ package main
 import (
 	"log"
 
+	"github.com/RoudiOlding/spark-todo/controllers"
 	"github.com/RoudiOlding/spark-todo/initializers"
+	"github.com/RoudiOlding/spark-todo/models"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -19,6 +21,9 @@ func init() {
 
 	// 2. Connect to Database
 	initializers.ConnectToDB()
+
+	// 3. Auto-Migrate (The Magic Step) 🪄
+	initializers.DB.AutoMigrate(&models.Todo{})
 }
 
 func main() {
@@ -34,6 +39,9 @@ func main() {
 			"status":  "Sparks Studio Backend is Online",
 		})
 	})
+
+	r.POST("/todos", controllers.CreateTodo) // Create
+	r.GET("/todos", controllers.GetTodos)    // Read
 
 	r.Run(":8080")
 }

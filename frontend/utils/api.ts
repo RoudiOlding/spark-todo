@@ -66,3 +66,15 @@ export const updateTodo = async (id: number, completed: boolean): Promise<Todo |
         return null;
     }
 };
+
+export const deleteTodo = async (id: number): Promise<boolean> => {
+    try {
+        const response = await fetch(`${API_URL}/todos/${id}`, {
+        method: "DELETE",
+        });
+        return response.ok;
+    } catch (error) {
+        console.error("Delete failed:", error);
+        return false;
+    }
+};

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { getTodos, createTodo, Todo, updateTodo } from "../utils/api";
+import { getTodos, createTodo, Todo, updateTodo, deleteTodo } from "../utils/api";
 
 export default function Home() {
   // 1. Define State (The memory of the screen)
@@ -34,6 +34,12 @@ export default function Home() {
 
     // 2. Call API
     await updateTodo(id, !currentStatus);
+  };
+
+  const handleDelete = async (id: number) => {
+    setTodos(todos.filter((t) => t.ID !== id));
+
+    await deleteTodo(id);
   };
 
   return (
@@ -80,10 +86,18 @@ export default function Home() {
               {todo.completed && "✓"}
             </button>
             
-            {/* 3. The Title (Just once!) */}
+            {/* 3. The Title */}
             <span className={todo.completed ? "line-through text-gray-500" : "text-gray-100"}>
               {todo.title}
             </span>
+
+            <button 
+              onClick={() => handleDelete(todo.ID)}
+              className="ml-4 text-gray-500 hover:text-red-500 transition-colors p-2"
+              aria-label="Delete task"
+            >
+              🗑️
+            </button>
           </div>
         ))}
         

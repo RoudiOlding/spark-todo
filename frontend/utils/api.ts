@@ -14,10 +14,24 @@ export interface Todo {
 }
 
 // 2. Function to Get Tasks
+// frontend/utils/api.ts
+
 export const getTodos = async (): Promise<Todo[]> => {
-    const response = await fetch(`${API_URL}/todos`);
-    const data = await response.json();
-    return data.todos;
+    try {
+        const response = await fetch(`${API_URL}/todos`);
+        
+        if (!response.ok) {
+        console.error("Backend refused request:", response.status);
+        return [];
+        }
+
+        const data = await response.json();
+
+        return data.todos || []; 
+    } catch (error) {
+        console.error("Network error:", error);
+        return [];
+    }
 };
 
 // 3. Function to Create Task

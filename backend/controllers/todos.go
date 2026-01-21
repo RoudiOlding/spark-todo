@@ -19,14 +19,12 @@ func CreateTodo(c *gin.Context) {
 		return
 	}
 
-	c.Bind(&body)
-
 	// 2. Create the todo
 	todo := models.Todo{Title: body.Title, Completed: false}
-	result := initializers.DB.Create(&todo) // Pass pointer of data to Create
+	result := initializers.DB.Create(&todo)
 
 	if result.Error != nil {
-		c.Status(400)
+		c.JSON(400, gin.H{"error": result.Error.Error()})
 		return
 	}
 

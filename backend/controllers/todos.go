@@ -11,7 +11,12 @@ import (
 func CreateTodo(c *gin.Context) {
 	// 1. Get data off request body
 	var body struct {
-		Title string
+		Title string `json:"title" binding:"required,min=3"`
+	}
+
+	if err := c.Bind(&body); err != nil {
+		c.JSON(400, gin.H{"error": "Task title must be at least 3 characters long"})
+		return
 	}
 
 	c.Bind(&body)

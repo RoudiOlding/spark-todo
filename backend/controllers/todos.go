@@ -48,6 +48,8 @@ func GetTodos(c *gin.Context) {
 }
 
 // Update a task (Mark as done/undone)
+// backend/controllers/todos.go
+
 func UpdateTodo(c *gin.Context) {
 	id := c.Param("id")
 
@@ -65,10 +67,15 @@ func UpdateTodo(c *gin.Context) {
 		return
 	}
 
-	initializers.DB.Model(&todo).Updates(map[string]interface{}{
-		"title":     body.Title,
+	updateData := map[string]interface{}{
 		"completed": body.Completed,
-	})
+	}
+
+	if body.Title != "" {
+		updateData["title"] = body.Title
+	}
+
+	initializers.DB.Model(&todo).Updates(updateData)
 
 	c.JSON(200, gin.H{"todo": todo})
 }

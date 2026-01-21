@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { getTodos, createTodo, Todo } from "../utils/api";
+import { getTodos, createTodo, Todo, updateTodo } from "../utils/api";
 
 export default function Home() {
   // 1. Define State (The memory of the screen)
@@ -23,6 +23,17 @@ export default function Home() {
     
     setTodos([...todos, created]);
     setNewTitle("");
+  };
+
+  // 4. Handle "Completed Task"
+  const handleToggle = async (id: number, currentStatus: boolean) => {
+    const updatedTodos = todos.map((t) => 
+      t.ID === id ? { ...t, completed: !currentStatus } : t
+    );
+    setTodos(updatedTodos);
+
+    // 2. Call API
+    await updateTodo(id, !currentStatus);
   };
 
   return (
@@ -57,7 +68,26 @@ export default function Home() {
             className="flex items-center p-4 bg-gray-800 rounded border border-gray-700 shadow-sm"
           >
             {/* Circle Icon */}
-            <div className={`w-4 h-4 rounded-full mr-4 ${todo.completed ? "bg-green-500" : "bg-gray-600"}`}></div>
+            <div
+              key={todo.ID}
+              className="flex items-center p-4 bg-gray-800 rounded border border-gray-700 shadow-sm transition-all hover:bg-gray-750"
+            >
+              {/* INTERACTIVE CIRCLE */}
+              <button
+                onClick={() => handleToggle(todo.ID, todo.completed)}
+                className={`w-6 h-6 rounded-full mr-4 border-2 flex items-center justify-center transition-all ${
+                  todo.completed 
+                    ? "bg-green-500 border-green-500" 
+                    : "border-gray-500 hover:border-blue-400"
+                }`}
+              >
+                {todo.completed && "✓"} {/* Simple Checkmark */}
+              </button>
+              
+                <span className={todo.completed ? "line-through text-gray-500" : "text-gray-100"}>
+                  {todo.title}
+                </span>
+              </div>
             
             <span className={todo.completed ? "line-through text-gray-500" : "text-gray-100"}>
               {todo.title}

@@ -46,3 +46,23 @@ export const createTodo = async (title: string): Promise<Todo> => {
     const data = await response.json();
     return data.todo;
 };
+
+
+// 4. Update the state of the task
+export const updateTodo = async (id: number, completed: boolean): Promise<Todo | null> => {
+    try {
+        const response = await fetch(`${API_URL}/todos/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ completed }),
+    });
+    
+    if (!response.ok) return null;
+
+    const data = await response.json();
+    return data.todo;
+    } catch (error) {
+        console.error("Update failed:", error);
+        return null;
+    }
+};

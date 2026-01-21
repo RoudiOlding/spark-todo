@@ -26,4 +26,6 @@ func ConnectToDB() {
 	}
 
 	log.Println(":DD —— Connected to Supabase (Postgres) successfully!")
+
+	log.Println("v2 CONNECTED TO SUPABASE (NO PREPARE)")
 }

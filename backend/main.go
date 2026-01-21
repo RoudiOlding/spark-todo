@@ -14,9 +14,8 @@ import (
 func init() {
 	// This runs BEFORE main()
 	// 1. Load .env variables
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
+	if err := godotenv.Load(); err != nil {
+		log.Println("No .env file found, assuming cloud environment...")
 	}
 
 	// 2. Connect to Database

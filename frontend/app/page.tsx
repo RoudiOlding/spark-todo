@@ -60,35 +60,27 @@ export default function Home() {
         </button>
       </div>
 
-      {/* List Section */}
+    {/* List Section */}
       <div className="w-full max-w-md space-y-3">
         {todos.map((todo) => (
+          // 1. Just ONE main container for the card
           <div
             key={todo.ID}
-            className="flex items-center p-4 bg-gray-800 rounded border border-gray-700 shadow-sm"
+            className="flex items-center p-4 bg-gray-800 rounded border border-gray-700 shadow-sm transition-all hover:bg-gray-750"
           >
-            {/* Circle Icon */}
-            <div
-              key={todo.ID}
-              className="flex items-center p-4 bg-gray-800 rounded border border-gray-700 shadow-sm transition-all hover:bg-gray-750"
+            {/* 2. The Button (Circle) */}
+            <button
+              onClick={() => handleToggle(todo.ID, todo.completed)}
+              className={`w-6 h-6 rounded-full mr-4 border-2 flex items-center justify-center transition-all ${
+                todo.completed 
+                  ? "bg-green-500 border-green-500" 
+                  : "border-gray-500 hover:border-blue-400"
+              }`}
             >
-              {/* INTERACTIVE CIRCLE */}
-              <button
-                onClick={() => handleToggle(todo.ID, todo.completed)}
-                className={`w-6 h-6 rounded-full mr-4 border-2 flex items-center justify-center transition-all ${
-                  todo.completed 
-                    ? "bg-green-500 border-green-500" 
-                    : "border-gray-500 hover:border-blue-400"
-                }`}
-              >
-                {todo.completed && "✓"} {/* Simple Checkmark */}
-              </button>
-              
-                <span className={todo.completed ? "line-through text-gray-500" : "text-gray-100"}>
-                  {todo.title}
-                </span>
-              </div>
+              {todo.completed && "✓"}
+            </button>
             
+            {/* 3. The Title (Just once!) */}
             <span className={todo.completed ? "line-through text-gray-500" : "text-gray-100"}>
               {todo.title}
             </span>
@@ -99,6 +91,7 @@ export default function Home() {
           <p className="text-center text-gray-500 mt-10">No tasks yet. Start building!</p>
         )}
       </div>
+
     </main>
   );
 }

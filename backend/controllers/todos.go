@@ -49,17 +49,14 @@ func GetTodos(c *gin.Context) {
 
 // Update a task (Mark as done/undone)
 func UpdateTodo(c *gin.Context) {
-	// 1. Get the ID from the URL
 	id := c.Param("id")
 
-	// 2. Get the data from the body
 	var body struct {
 		Title     string
 		Completed bool
 	}
 	c.Bind(&body)
 
-	// 3. Find the task in the DB
 	var todo models.Todo
 	result := initializers.DB.First(&todo, id)
 
@@ -68,12 +65,10 @@ func UpdateTodo(c *gin.Context) {
 		return
 	}
 
-	// 4. Update it
-	initializers.DB.Model(&todo).Updates(models.Todo{
-		Title:     body.Title,
-		Completed: body.Completed,
+	initializers.DB.Model(&todo).Updates(map[string]interface{}{
+		"title":     body.Title,
+		"completed": body.Completed,
 	})
 
-	// 5. Respond
 	c.JSON(200, gin.H{"todo": todo})
 }

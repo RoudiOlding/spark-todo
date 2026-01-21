@@ -40,9 +40,10 @@ func main() {
 		})
 	})
 
-	r.POST("/todos", controllers.CreateTodo)    // Create
-	r.GET("/todos", controllers.GetTodos)       // Read
-	r.PUT("/todos/:id", controllers.UpdateTodo) // Update "the Checkbox"
+	r.POST("/todos", controllers.CreateTodo)       // Create
+	r.GET("/todos", controllers.GetTodos)          // Read
+	r.PUT("/todos/:id", controllers.UpdateTodo)    // Update "the Checkbox"
+	r.DELETE("/todos/:id", controllers.DeleteTodo) // Delete
 
 	r.Run(":8080")
 }

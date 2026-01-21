@@ -1,6 +1,11 @@
 // 1. Define the URL
 
-const API_URL = "http://localhost:8080";
+
+// OLD:
+// const API_URL = "http://localhost:8080";
+
+// NEW:
+const API_URL = "https://spark-todo.onrender.com";
 
 export interface Todo {
     ID: number;

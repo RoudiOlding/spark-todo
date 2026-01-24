@@ -1,3 +1,5 @@
+// Generic, like a form.
+
 package main
 
 import (
@@ -12,16 +14,12 @@ import (
 )
 
 func init() {
-	// This runs BEFORE main()
-	// 1. Load .env variables
+
 	if err := godotenv.Load(); err != nil {
-		log.Println("No .env file found, assuming cloud environment...")
+		log.Println("No .env file found, assuming cloud enviroment")
 	}
 
-	// 2. Connect to Database
 	initializers.ConnectToDB()
-
-	// 3. Auto-Migrate (The Magic Step) 🪄
 	initializers.DB.AutoMigrate(&models.Todo{})
 }
 
@@ -40,10 +38,10 @@ func main() {
 		})
 	})
 
-	r.POST("/todos", controllers.CreateTodo)       // Create
-	r.GET("/todos", controllers.GetTodos)          // Read
-	r.PUT("/todos/:id", controllers.UpdateTodo)    // Update "the Checkbox"
-	r.DELETE("/todos/:id", controllers.DeleteTodo) // Delete
+	r.POST("/todos", controllers.CreateTodo)
+	r.GET("/todos", controllers.GetTodos)
+	r.PUT("/todos/:id", controllers.UpdateTodo)
+	r.DELETE("/todos/:id", controllers.DeleteTodo)
 
 	r.Run(":8080")
 }

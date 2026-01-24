@@ -39,7 +39,7 @@ func CreateTodo(c *gin.Context) {
 func GetTodos(c *gin.Context) {
 	// 1. Get the todos
 	var todos []models.Todo
-	initializers.DB.Find(&todos)
+	initializers.DB.Order("created_at desc").Find(&todos)
 
 	// 2. Return them
 	c.JSON(200, gin.H{

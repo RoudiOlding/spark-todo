@@ -45,7 +45,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-gray-900 text-white flex flex-col items-center p-10">
       <h1 className="text-4xl font-bold mb-8 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
-        Sparks Studio To-Do
+        S.A.I
       </h1>
 
       {/* Input Section */}
